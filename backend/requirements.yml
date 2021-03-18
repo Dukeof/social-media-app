@@ -1,0 +1,14 @@
+name: MFS
+dependencies:
+  - python
+  - pip
+  - psycopg2
+  - pip:
+      - Django
+      - djangorestframework-simplejwt
+      - djangorestframework
+      - drf-yasg
+      - Pillow
+      - gunicorn
+      - flake8
+
