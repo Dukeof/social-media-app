@@ -8,7 +8,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-#      - frontend:/frontend
+      - frontend:/frontend
       - ./nginx:/etc/nginx/conf.d
       - media-files:/media-files
       - static-files:/static-files
@@ -21,7 +21,7 @@ services:
       - ./envs/dev.env
     command: 'sh /scripts/run.sh'
     volumes:
-#      - frontend:/frontend/build
+      - frontend:/frontend/build
       - media-files:/media-files
       - static-files:/static-files
     depends_on:
@@ -40,4 +40,4 @@ volumes:
   postgres:
   media-files:
   static-files:
-#  frontend:
+  frontend:
