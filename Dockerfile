@@ -1,4 +1,4 @@
-FROM continuumio/miniconda:latest
+FROM continuumio/miniconda3:latest
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
@@ -6,11 +6,6 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -qqy \
         wget \
         bzip2 \
         graphviz
-
-RUN echo 'export PATH=/opt/miniconda/bin:$PATH' > /etc/profile.d/conda.sh && \
-    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
-    /bin/bash ~/miniconda.sh -b -p /opt/miniconda && \
-    rm ~/miniconda.sh
 
 RUN curl -sL https://deb.nodesource.com/setup_13.x | bash - && apt-get install -y nodejs && apt-get install -y npm
 
