@@ -1,10 +1,11 @@
+from django.contrib.auth import get_user_model
 from django.http import JsonResponse, request
 from django.shortcuts import render
 from rest_framework.generics import ListAPIView, GenericAPIView
 from rest_framework.response import Response
-
-from user.models import User
 from user.serializers.default import UserSerializer
+
+User = get_user_model()
 
 
 class GetAllUsersView(ListAPIView):

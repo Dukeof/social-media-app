@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.shortcuts import render
 
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView, ListAPIView
@@ -7,7 +8,8 @@ from rest_framework.response import Response
 from post.models import Post
 from post.permissions import IsOwnerOrAdmin
 from post.serializers.default import PostSerializer
-from user.models import User
+
+User = get_user_model()
 
 
 class GetCreatePostsView(ListCreateAPIView):
