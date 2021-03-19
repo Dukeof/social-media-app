@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn Django
+          Learn Nothing
         </a>
       </header>
     </div>
