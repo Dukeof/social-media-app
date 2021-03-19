@@ -15,7 +15,7 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt
 
   backend:
-    image: registry.gitlab.propulsion-home.ch/dusko-radovic/bootcamp_exercises/week_8/motion_fe:latest
+    image: registry.gitlab.propulsion-home.ch/full-stack/batch-15-february-2021/full-stack-motion-projects/juskoded/motion_fs:latest
     restart: always
     env_file:
       - ./envs/dev.env
