@@ -2,7 +2,7 @@ version: '3'
 
 services:
   backend:
-    image: registry.gitlab.propulsion-home.ch/full-stack/batch-15-february-2021/full-stack-motion-projects/juskoded/motion_fs:latest
+    image: registry.gitlab.propulsion-home.ch/full-stack/batch-15-february-2021/full-stack-motion-projects/our_awesome_group/juskoded:latest
     restart: always
     env_file:
       - ./envs/dev.env

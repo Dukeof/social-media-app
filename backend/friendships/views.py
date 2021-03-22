@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 
 from friendships.models import Friendships
@@ -21,3 +21,11 @@ class SendFriendRequestView(GenericAPIView):
         friendship = Friendships(request_from=sender, request_for=receiver)
         friendship.save()
         return Response(self.get_serializer(friendship).data)
+
+
+class AcceptOrRejectRequestView(RetrieveUpdateDestroyAPIView):
+    serializer_class = FriendshipSerializer
+    queryset = Friendships.objects.all()
+
+
+
