@@ -2,7 +2,7 @@ version: '3'
 
 services:
   backend:
-    image: image1:latest
+    image: registry.gitlab.propulsion-home.ch/full-stack/batch-15-february-2021/full-stack-motion-projects/our_awesome_group/juskoded:latest
     restart: always
     env_file:
       - ./envs/dev.env
@@ -10,7 +10,7 @@ services:
     volumes:
       - ./backend:/backend
       - media-files:/media-files
-      - static-files:/static-files
+      - static-files:/static-filesdocker
     ports:
       - '8000:8000'
     depends_on:

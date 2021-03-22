@@ -26,5 +26,6 @@ pycache
 media-files
 static-files
 
+
 *.pyc
 __pycache__
