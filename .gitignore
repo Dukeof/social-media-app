@@ -26,4 +26,5 @@ pycache
 media-files
 static-files
 
-backend/*/__pycache__
+
+*.pyc
