@@ -1,14 +1,15 @@
 name: MFS
 dependencies:
-  - python
-  - pip
+  - python=3.9
+  - pip=21.0.1
   - psycopg2
   - pip:
-      - Django
-      - djangorestframework-simplejwt
-      - djangorestframework
-      - drf-yasg
-      - Pillow
+      - Django==3.1.7
+      - djangorestframework==3.12.2
+      - djangorestframework_simplejwt==4.6
+      - Pillow==8.1
+      - drf-yasg==1.20
+      - Markdown==3.3
       - gunicorn
       - flake8
 

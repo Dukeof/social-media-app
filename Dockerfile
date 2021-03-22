@@ -1,18 +1,14 @@
-FROM continuumio/miniconda:latest
+FROM continuumio/miniconda3:latest
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -qqy \
         wget \
         bzip2 \
-        graphviz
+        graphviz \
+        curl
 
-RUN echo 'export PATH=/opt/miniconda/bin:$PATH' > /etc/profile.d/conda.sh && \
-    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
-    /bin/bash ~/miniconda.sh -b -p /opt/miniconda && \
-    rm ~/miniconda.sh
-
-RUN curl -sL https://deb.nodesource.com/setup_13.x | bash - && apt-get install -y nodejs && apt-get install -y npm
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt-get install -y nodejs && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && apt update && apt install yarn
 
 RUN mkdir -p /backend
 
@@ -23,17 +19,17 @@ ENV PATH /opt/conda/envs/MFS/bin:$PATH
 
 RUN echo "source activate MFS" >~/.bashrc
 
+COPY ./backend /backend
+
 RUN mkdir -p /scripts
 COPY ./scripts /scripts
 RUN chmod +x ./scripts*
-
-COPY ./backend /backend
 
 RUN mkdir -p /frontend
 RUN mkdir -p /frontend_tmp
 COPY ./frontend /frontend_tmp
 WORKDIR frontend_tmp
-RUN npm i
-RUN npm run build
+RUN yarn install
+RUN yarn build
 
 WORKDIR /backend
