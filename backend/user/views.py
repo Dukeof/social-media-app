@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse, request
 from django.shortcuts import render
-from rest_framework.generics import ListAPIView, GenericAPIView
+from rest_framework.generics import ListAPIView, GenericAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 from user.serializers.default import UserSerializer
 
@@ -48,4 +48,14 @@ class IAmFollowingView(ListAPIView):
 
     def filter_queryset(self, queryset):
         return self.request.user.following
+
+
+class GetUpdateMyUserProfile(RetrieveUpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        return self.request.user
+
+
 
