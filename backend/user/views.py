@@ -12,6 +12,15 @@ class GetAllUsersView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    def get(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        search = request.query_params.get('search')
+
+        if search:
+            queryset = queryset.filter(username__icontains=search)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
 
 class ToggleLikeUserView(GenericAPIView):
     queryset = User.objects.all()

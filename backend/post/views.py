@@ -20,6 +20,15 @@ class GetCreatePostsView(ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
+    def get(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        search = request.query_params.get('search')
+
+        if search:
+            queryset = queryset.filter(content__icontains=search).order_by('created')
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
 
 class GetEditDeletePostView(RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
