@@ -41,7 +41,7 @@ urlpatterns = [
     path('backend/api/social/posts/', include('post.urls')),
     path('backend/api/', include('user.urls')),
     path('backend/api/social/friends/', include('friendships.urls')),
-
+    path('backend/api/auth/', include('registration.urls')),
     path('backend/api/docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
     path('backend/api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
