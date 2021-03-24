@@ -38,10 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    # 3rd party
     'drf_yasg',
     'rest_framework',
 
+    # own
     'registration',
     'user',
     'post',
