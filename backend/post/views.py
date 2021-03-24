@@ -30,6 +30,7 @@ class GetEditDeletePostView(RetrieveUpdateDestroyAPIView):
 class ToggleLikePostView(GenericAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -43,6 +44,7 @@ class ToggleLikePostView(GenericAPIView):
 
 class GetLikedPostsView(ListAPIView):
     serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return Post.objects.filter(liked_by=self.request.user)
@@ -50,6 +52,7 @@ class GetLikedPostsView(ListAPIView):
 
 class GetUserPostsView(ListAPIView):
     serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return Post.objects.filter(author=self.kwargs.get('pk'))
@@ -58,6 +61,7 @@ class GetUserPostsView(ListAPIView):
 
 class PostsOfPeopleIAmFollowingView(ListAPIView):
     serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
 
     # queryset = Post.objects.all()
 
