@@ -1,9 +1,7 @@
-from django.contrib.auth import get_user_model
-
 from rest_framework.generics import CreateAPIView, GenericAPIView
-from registration.serializers import ValidateUserSerializer, RegisterUserSerializer
+from rest_framework.response import Response
 
-User = get_user_model()
+from registration.serializers import ValidateUserSerializer, RegisterUserSerializer
 
 
 class CreateRegistrationView(CreateAPIView):
@@ -12,4 +10,12 @@ class CreateRegistrationView(CreateAPIView):
 
 
 class SignUpView(GenericAPIView):
+    permission_classes = []
     serializer_class = ValidateUserSerializer
+
+    def patch(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(serializer.validated_data)
+
+        return Response(serializer.data)
