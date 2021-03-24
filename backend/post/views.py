@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from post.models import Post
 from post.permissions import IsOwnerOrAdmin
 from post.serializers.default import PostSerializer
+from user.serializers.default import UserSerializer
 
 User = get_user_model()
 
@@ -20,14 +21,16 @@ class GetCreatePostsView(ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-    def get(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        search = request.query_params.get('search')
 
-        if search:
-            queryset = queryset.filter(content__icontains=search).order_by('created')
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+# below works just fine, no additional url needed
+# def get(self, request, *args, **kwargs):
+#     queryset = self.get_queryset()
+#     search = request.query_params.get('search')
+#
+#     if search:
+#         queryset = queryset.filter(content__icontains=search).order_by('created')
+#     serializer = self.get_serializer(queryset, many=True)
+#     return Response(serializer.data)
 
 
 class GetEditDeletePostView(RetrieveUpdateDestroyAPIView):
@@ -75,3 +78,17 @@ class PostsOfPeopleIAmFollowingView(ListAPIView):
 
     def get_queryset(self):
         return Post.objects.all().filter(author__in=self.request.user.following.all())
+
+
+class Search(ListAPIView):
+    def get(self, request, *args, **kwargs):
+        subject = kwargs.get('subject')
+        keyword = request.query_params.get('keyword')
+
+        if subject == 'post':
+            queryset = Post.objects.filter(content__icontains=keyword)
+            serializer = PostSerializer(queryset, many=True)
+        elif subject == 'user':
+            queryset = User.objects.filter(username__icontains=keyword)
+            serializer = UserSerializer(queryset, many=True)
+        return Response(serializer.data)

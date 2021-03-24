@@ -12,5 +12,8 @@ class Post(models.Model):
     author = models.ForeignKey(to=User, on_delete=models.SET_NULL, null=True, related_name='posts')
     liked_by = models.ManyToManyField(to=User, blank=True, related_name='liked_posts')
 
+    def __str__(self):
+        return self.id, self.content, self.created, self.author, self.liked_by
+
     class Meta:
         ordering = ['-created']
