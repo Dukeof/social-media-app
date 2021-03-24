@@ -17,5 +17,8 @@ class Post(models.Model):
                                        related_name='shared_within_posts',
                                        on_delete=models.SET_NULL)
 
+    def __str__(self):
+        return self.id, self.content, self.created, self.author, self.liked_by
+
     class Meta:
         ordering = ['-created']
