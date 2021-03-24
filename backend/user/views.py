@@ -12,16 +12,16 @@ class GetAllUsersView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-# below works just fine, no external url needed, search done by: /api/users/?search=dvdvd
-#
-    # def get(self, request, *args, **kwargs):
-    #     queryset = self.get_queryset()
-    #     search = request.query_params.get('search')
-    #
-    #     if search:
-    #         queryset = queryset.filter(username__icontains=search)
-    #     serializer = self.get_serializer(queryset, many=True)
-    #     return Response(serializer.data)
+# no additional url needed, endpoint: backend/api/users/?search=dvdvd
+
+    def get(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        search = request.query_params.get('search')
+
+        if search:
+            queryset = queryset.filter(username__icontains=search)
+            serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class ToggleLikeUserView(GenericAPIView):
