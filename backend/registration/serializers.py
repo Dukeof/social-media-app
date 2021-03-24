@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from django.core.mail import send_mail
+from rest_framework.response import Response
+
 from registration.models import Registration
 
 User = get_user_model()
@@ -24,8 +26,8 @@ class RegisterUserSerializer(serializers.ModelSerializer):
             [new_user.email],
             fail_silently=False,
         )
-        return registration
+        return registration, Response(status=200)
 
     class Meta:
         model = Registration
-        fields = ("id", "email")
+        fields = "__all__"
