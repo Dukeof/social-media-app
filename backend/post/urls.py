@@ -11,5 +11,7 @@ urlpatterns = [
     path('user/<int:pk>/', GetUserPostsView.as_view()),
     path('following/', PostsOfPeopleIAmFollowingView.as_view()),
     # path('search/<str:subject>', Search.as_view()), this is for additional class Search - not used!
+    # below is only for documentation purpose, endpoint works without below url
+    # path('?search', GetCreatePostsView.as_view()),
 ]
 

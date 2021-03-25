@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.shortcuts import render
+from drf_yasg.utils import swagger_auto_schema
 
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -8,12 +8,32 @@ from rest_framework.response import Response
 from post.models import Post
 from post.permissions import IsOwnerOrAdmin
 from post.serializers.default import PostSerializer
-from user.serializers.default import UserSerializer
+
 
 User = get_user_model()
 
 
 class GetCreatePostsView(ListCreateAPIView):
+    '''
+    display all posts
+
+    Returns a list of all post.
+    Search posts: endpoint:
+    **backend/api/social/posts/?search=whatyouaresearchingfor**
+    query string (/posts?search=whatareyoulookingfor)
+
+    post:
+    Create a new post.
+    paths:
+    /posts/?search:
+    get:
+    summary: Get a post by text in its content
+    -in: query
+    post:
+    Create a new post.
+    '''
+    #@swagger_auto_schema(operation_description="test justy", responses={404: 'posts not found'})
+
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
@@ -28,7 +48,10 @@ class GetCreatePostsView(ListCreateAPIView):
 
         if search:
             queryset = queryset.filter(content__icontains=search).order_by('created')
-            serializer = self.get_serializer(queryset, many=True)
+            #serializer = self.get_serializer(queryset, many=True)
+            serializer = PostSerializer(queryset, many=True)
+        else:
+            serializer = PostSerializer(queryset, many=True)
         return Response(serializer.data)
 
 
