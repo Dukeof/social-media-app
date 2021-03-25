@@ -26,7 +26,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
             [new_user.email],
             fail_silently=False,
         )
-        return registration, Response(status=200)
+        return Response(status=201)
 
     class Meta:
         model = Registration

@@ -10,30 +10,29 @@ import dotEmpty from '../../assets/dot_empty.png';
 
 // =========================== fetch requests ===========================
 import { baseUrl, headers } from '../../store/fetch';
-import { Redirect } from 'react-router';
+import { useHistory } from 'react-router';
 import { signUpInputWrapper } from '../../styles/styledWrappers';
 import { signInButtonStyle, signInColorfulButtonStyle } from  '../../styles/styledButtons';
 
 
 const SignUpPanel = () => {
+    let history = useHistory();
 
 
-    const [signUpValues, setSignUpValues] = useState({email: ''});
+    const [signUpValues, setSignUpValues] = useState({ email: '' });
 
-    const signUpHandler = async (value) => {
-        // event.preventDefault();
-        console.log(value.email)
+    const signUpHandler = ({value}) => {
+        // console.log(value)
         const config = {
             method: 'POST',
-            header: headers,
+            headers: headers,
             body: JSON.stringify({ email: value.email })
         }
-        console.log(config.body);
-        fetch(`${baseUrl}auth/registration/`, config).then((res) => res.json())
-        .then((data) => {
-          console.log(data);
+        fetch(`${baseUrl}auth/registration/`, config)
+        .then((response) => {
+            // console.log(response.status)
+          if (response.status === 201) history.push('/signup/congrats');
         });
-        // if (response.status === 201) <Redirect to='/signup/congrats'/>;
     };
 
     return (
@@ -49,7 +48,7 @@ const SignUpPanel = () => {
             <Box height='85%'>
                 <Form value={ signUpValues } 
                     onChange={ nextValue => setSignUpValues(nextValue) }
-                    onSubmit={ ({value}) => signUpHandler(value) }
+                    onSubmit={ (value ) => signUpHandler(value) }
                 >
                     <Box flex justify='end' direction='column'
                         align='center' height='75%' gap='6.5em'
@@ -58,15 +57,14 @@ const SignUpPanel = () => {
                             size='2.5em' fontWeight='300' margin={{top: '2.5em'}}                            
                         >Sign Up</Text>
                         <Box style={signUpInputWrapper}>
-                            <Box width="medium" direction="row"
-                                margin="large" align="center" marginBottom='0.25em'
-                            >
+                            <Box width="medium" direction="row" margin="large" align="center" marginBottom='0.25em'>
+                                
                                 <FormField name="email" htmlFor="email">
                                 <TextInput id='email' name='email' placeholder='Email'
                                     icon={<Mail color='purple' style={{marginBottom: '-0.05em'}}/>}
                                     revese plain type='text' margin='0.25em'
-                                />
-                                </FormField>
+                                /></FormField>
+                           
                             </Box>
                         </Box>
 
