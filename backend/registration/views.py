@@ -11,6 +11,7 @@ class CreateRegistrationView(CreateAPIView):
     serializer_class = RegisterUserSerializer
 
 
+
 class SignUpView(GenericAPIView):
     serializer_class = UserValidationSerializer
     permission_classes = []
