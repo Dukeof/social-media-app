@@ -10,6 +10,11 @@ User = get_user_model()
 
 
 class SendFriendRequestView(GenericAPIView):
+    '''
+    post: Send friend request to another user
+
+    .
+    '''
     queryset = User.objects.all()
     serializer_class = FriendshipSerializer
 
@@ -24,6 +29,23 @@ class SendFriendRequestView(GenericAPIView):
 
 
 class AcceptOrRejectRequestView(RetrieveUpdateDestroyAPIView):
+    '''
+    delete: Delete a friend request
+
+    .
+
+    patch: Accept or Reject an open friend request
+
+    .
+
+    get: Get details of a friend request
+
+    .
+
+    put: Accept or Reject an open friend request??
+
+    .
+    '''
     serializer_class = FriendshipSerializer
     queryset = Friendships.objects.all()
 
