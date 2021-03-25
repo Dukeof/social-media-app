@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from drf_yasg.utils import swagger_auto_schema
 
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -19,7 +18,7 @@ class GetCreatePostsView(ListCreateAPIView):
 
     .
 
-    post: User can create a new post by sending post data. S/He should also be able to share another post.
+    post: User can create a new post by sending post data. S/He should also be able to share another post
 
     .
     '''
@@ -51,7 +50,7 @@ class GetEditDeletePostView(RetrieveUpdateDestroyAPIView):
 
     .
 
-    patch: Update a specific post (only allow owner of post or admin)
+    patch: Update a specific post (only allowed owner of post or admin)
 
     .
 
@@ -59,7 +58,7 @@ class GetEditDeletePostView(RetrieveUpdateDestroyAPIView):
 
     .
 
-    put: Update a specific post (only allow owner of post or admin)
+    put: Update a specific post (only allowed owner of post or admin)
 
     .
     '''
@@ -90,7 +89,7 @@ class ToggleLikePostView(GenericAPIView):
 
 class GetLikedPostsView(ListAPIView):
     '''
-    the list of the posts the user likes
+    The list of the posts the user likes
 
     .
     '''
@@ -103,7 +102,7 @@ class GetLikedPostsView(ListAPIView):
 
 class GetUserPostsView(ListAPIView):
     '''
-    lists all the posts of a specific user in chronological order
+    List all the posts of a specific user in chronological order
 
     .
     '''
@@ -117,7 +116,7 @@ class GetUserPostsView(ListAPIView):
 
 class PostsOfPeopleIAmFollowingView(ListAPIView):
     '''
-    lists all the posts of followed users in chronological order
+    List all the posts of followed users in chronological order
 
     .
     '''
