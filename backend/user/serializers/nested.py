@@ -17,6 +17,17 @@ class UserPostSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'first_name', 'last_name', 'email']
 
 
+class UserCommentSerializer(serializers.ModelSerializer):
+    # full_name = serializers.SerializerMethodField()
+
+    # def get_full_name(self, instance):
+    #     return f'{instance.first_name} {instance.last_name}'
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'first_name', 'last_name', 'email']
+
+
 
 
 

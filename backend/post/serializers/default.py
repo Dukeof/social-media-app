@@ -11,6 +11,7 @@ class PostSerializer(serializers.ModelSerializer):
     liked_by = UserPostSerializer(read_only=True, many=True)
     post_shared = PostSharedSerializer(read_only=True)
     comments = CommentInPostSerializer(many=True, read_only=True)
+    # shared_within_posts = PostSharedSerializer(read_only=True)
 
     class Meta:
         model = Post

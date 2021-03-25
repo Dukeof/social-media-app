@@ -11,14 +11,14 @@ class Post(models.Model):
 
     author = models.ForeignKey(to=User, on_delete=models.SET_NULL, null=True, related_name='posts')
     liked_by = models.ManyToManyField(to=User, blank=True, related_name='liked_posts')
-    post_shared = models.OneToOneField(to='self',
+    post_shared = models.ForeignKey(to='self',
                                        blank=True,
                                        null=True,
                                        related_name='shared_within_posts',
                                        on_delete=models.SET_NULL)
 
     def __str__(self):
-        return self.id, self.content, self.created, self.author, self.liked_by
+        return f'{self.id} {self.author.username}'
 
     class Meta:
         ordering = ['-created']

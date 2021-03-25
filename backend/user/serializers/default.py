@@ -1,10 +1,14 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
+from user.serializers.nested import UserPostSerializer
+
 User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
+    friends = serializers.ReadOnlyField()
+
     class Meta:
         model = User
         fields = ['id',
@@ -15,4 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
                   'followers',
                   'following',
                   'posts',
-                  'liked_posts']
+                  'liked_posts',
+                  'avatar',
+                  'about_me',
+                  'friends']

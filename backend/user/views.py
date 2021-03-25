@@ -3,6 +3,8 @@ from django.http import JsonResponse, request
 from django.shortcuts import render
 from rest_framework.generics import ListAPIView, GenericAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
+
+from friendships.models import Friendships
 from user.serializers.default import UserSerializer
 
 User = get_user_model()
@@ -67,3 +69,15 @@ class GetUpdateMyUserProfile(RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class ShowFriendsView(ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        return self.request.user
+
+
+
+

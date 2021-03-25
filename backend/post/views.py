@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import render
+from rest_framework import status
 
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -18,8 +19,20 @@ class GetCreatePostsView(ListCreateAPIView):
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
 
-    def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+    # def perform_create(self, serializer):
+    #     serializer.save(author=self.request.user)
+
+    def create(self, request, *args, **kwargs):
+        if request.data.get('post_shared'):
+            post = self.queryset.get(id=request.data['post_shared'])
+            serializer = self.get_serializer(data={'content': request.data['content']}, partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save(author=request.user, post_shared=post)
+        else:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save(author=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 # below works just fine, no additional url needed
