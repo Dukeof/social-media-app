@@ -15,24 +15,14 @@ User = get_user_model()
 
 class GetCreatePostsView(ListCreateAPIView):
     '''
-    display all posts
+    get: List all the posts of all users in chronological order
 
-    Returns a list of all post.
-    Search posts: endpoint:
-    **backend/api/social/posts/?search=whatyouaresearchingfor**
-    query string (/posts?search=whatareyoulookingfor)
+    .
 
-    post:
-    Create a new post.
-    paths:
-    /posts/?search:
-    get:
-    summary: Get a post by text in its content
-    -in: query
-    post:
-    Create a new post.
+    post: User can create a new post by sending post data. S/He should also be able to share another post.
+
+    .
     '''
-    #@swagger_auto_schema(operation_description="test justy", responses={404: 'posts not found'})
 
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -56,12 +46,34 @@ class GetCreatePostsView(ListCreateAPIView):
 
 
 class GetEditDeletePostView(RetrieveUpdateDestroyAPIView):
+    '''
+    delete: Delete a post by ID (only allowed for owner of post or admin)
+
+    .
+
+    patch: Update a specific post (only allow owner of post or admin)
+
+    .
+
+    get: Get a specific post by ID and display all the information about that post
+
+    .
+
+    put: Update a specific post (only allow owner of post or admin)
+
+    .
+    '''
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
 
 
 class ToggleLikePostView(GenericAPIView):
+    '''
+    Toggle like a post
+
+    .
+    '''
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
@@ -77,6 +89,11 @@ class ToggleLikePostView(GenericAPIView):
 
 
 class GetLikedPostsView(ListAPIView):
+    '''
+    the list of the posts the user likes
+
+    .
+    '''
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
 
@@ -85,6 +102,11 @@ class GetLikedPostsView(ListAPIView):
 
 
 class GetUserPostsView(ListAPIView):
+    '''
+    lists all the posts of a specific user in chronological order
+
+    .
+    '''
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
 
@@ -94,6 +116,11 @@ class GetUserPostsView(ListAPIView):
 
 
 class PostsOfPeopleIAmFollowingView(ListAPIView):
+    '''
+    lists all the posts of followed users in chronological order
+
+    .
+    '''
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
 
