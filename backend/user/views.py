@@ -21,6 +21,8 @@ class GetAllUsersView(ListAPIView):
         if search:
             queryset = queryset.filter(username__icontains=search)
             serializer = self.get_serializer(queryset, many=True)
+        else:
+            serializer = UserSerializer(queryset, many=True)
         return Response(serializer.data)
 
 
