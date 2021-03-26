@@ -1,6 +1,9 @@
 from django.contrib.auth import get_user_model
+<<<<<<< HEAD
 from django.shortcuts import render
 from rest_framework import status
+=======
+>>>>>>> dev
 
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -9,12 +12,22 @@ from rest_framework.response import Response
 from post.models import Post, PostImages
 from post.permissions import IsOwnerOrAdmin
 from post.serializers.default import PostSerializer
-from user.serializers.default import UserSerializer
+
 
 User = get_user_model()
 
 
 class GetCreatePostsView(ListCreateAPIView):
+    '''
+    get: List all the posts of all users in chronological order
+
+    .
+
+    post: User can create a new post by sending post data. S/He should also be able to share another post
+
+    .
+    '''
+
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
@@ -40,25 +53,49 @@ class GetCreatePostsView(ListCreateAPIView):
                 new_image.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+# below works just fine, no additional url needed. endpoint: backend/api/social/posts/?search=poplpo
+    def get(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        search = request.query_params.get('search')
 
-# below works just fine, no additional url needed
-# def get(self, request, *args, **kwargs):
-#     queryset = self.get_queryset()
-#     search = request.query_params.get('search')
-#
-#     if search:
-#         queryset = queryset.filter(content__icontains=search).order_by('created')
-#     serializer = self.get_serializer(queryset, many=True)
-#     return Response(serializer.data)
+        if search:
+            queryset = queryset.filter(content__icontains=search).order_by('created')
+            #serializer = self.get_serializer(queryset, many=True)
+            serializer = PostSerializer(queryset, many=True)
+        else:
+            serializer = PostSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class GetEditDeletePostView(RetrieveUpdateDestroyAPIView):
+    '''
+    delete: Delete a post by ID (only allowed for owner of post or admin)
+
+    .
+
+    patch: Update a specific post (only allowed owner of post or admin)
+
+    .
+
+    get: Get a specific post by ID and display all the information about that post
+
+    .
+
+    put: Update a specific post (only allowed owner of post or admin)
+
+    .
+    '''
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
 
 
 class ToggleLikePostView(GenericAPIView):
+    '''
+    Toggle like a post
+
+    .
+    '''
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
@@ -74,6 +111,11 @@ class ToggleLikePostView(GenericAPIView):
 
 
 class GetLikedPostsView(ListAPIView):
+    '''
+    The list of the posts the user likes
+
+    .
+    '''
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
 
@@ -82,6 +124,11 @@ class GetLikedPostsView(ListAPIView):
 
 
 class GetUserPostsView(ListAPIView):
+    '''
+    List all the posts of a specific user in chronological order
+
+    .
+    '''
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
 
@@ -91,6 +138,11 @@ class GetUserPostsView(ListAPIView):
 
 
 class PostsOfPeopleIAmFollowingView(ListAPIView):
+    '''
+    List all the posts of followed users in chronological order
+
+    .
+    '''
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
 
@@ -102,16 +154,16 @@ class PostsOfPeopleIAmFollowingView(ListAPIView):
     def get_queryset(self):
         return Post.objects.all().filter(author__in=self.request.user.following.all())
 
-
-class Search(ListAPIView):
-    def get(self, request, *args, **kwargs):
-        subject = kwargs.get('subject')
-        keyword = request.query_params.get('keyword')
-
-        if subject == 'post':
-            queryset = Post.objects.filter(content__icontains=keyword)
-            serializer = PostSerializer(queryset, many=True)
-        elif subject == 'user':
-            queryset = User.objects.filter(username__icontains=keyword)
-            serializer = UserSerializer(queryset, many=True)
-        return Response(serializer.data)
+# this is an additional url
+# class Search(ListAPIView):
+#     def get(self, request, *args, **kwargs):
+#         subject = kwargs.get('subject')
+#         keyword = request.query_params.get('keyword')
+#
+#         if subject == 'post':
+#             queryset = Post.objects.filter(content__icontains=keyword)
+#             serializer = PostSerializer(queryset, many=True)
+#         elif subject == 'user':
+#             queryset = User.objects.filter(username__icontains=keyword)
+#             serializer = UserSerializer(queryset, many=True)
+#         return Response(serializer.data)

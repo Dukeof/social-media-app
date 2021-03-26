@@ -17,6 +17,7 @@ class UserPostSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'first_name', 'last_name', 'email']
 
 
+<<<<<<< HEAD
 class UserCommentSerializer(serializers.ModelSerializer):
     # full_name = serializers.SerializerMethodField()
 
@@ -32,3 +33,9 @@ class UserCommentSerializer(serializers.ModelSerializer):
 
 
 
+=======
+class UserValidationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'first_name', 'last_name', 'email']
+>>>>>>> dev

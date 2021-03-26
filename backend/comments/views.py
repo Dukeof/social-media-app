@@ -8,6 +8,15 @@ from post.models import Post
 
 
 class PostCommentView(ListCreateAPIView):
+    '''
+    get: List all comments of a post
+
+    .
+
+    post: Create a new comment on a post.
+
+    .
+    '''
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticated]
 
