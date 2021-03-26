@@ -1,9 +1,5 @@
 from django.contrib.auth import get_user_model
-<<<<<<< HEAD
-from django.shortcuts import render
 from rest_framework import status
-=======
->>>>>>> dev
 
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -12,7 +8,6 @@ from rest_framework.response import Response
 from post.models import Post, PostImages
 from post.permissions import IsOwnerOrAdmin
 from post.serializers.default import PostSerializer
-
 
 User = get_user_model()
 
@@ -53,14 +48,14 @@ class GetCreatePostsView(ListCreateAPIView):
                 new_image.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-# below works just fine, no additional url needed. endpoint: backend/api/social/posts/?search=poplpo
+    # below works just fine, no additional url needed. endpoint: backend/api/social/posts/?search=poplpo
     def get(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         search = request.query_params.get('search')
 
         if search:
             queryset = queryset.filter(content__icontains=search).order_by('created')
-            #serializer = self.get_serializer(queryset, many=True)
+            # serializer = self.get_serializer(queryset, many=True)
             serializer = PostSerializer(queryset, many=True)
         else:
             serializer = PostSerializer(queryset, many=True)
