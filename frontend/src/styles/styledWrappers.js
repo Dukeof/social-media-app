@@ -10,7 +10,16 @@ export const signUpInputWrapper = {
     'borderBottom': 'solid rgba(149,149,149,0.21) 0.125em'
 };
 
-
+export const InputWrapper = {
+    width: '21em',
+    height: '3.75em',
+    marginTop: '5em',
+    marginBottom: '7.5em',
+    display: 'flex',
+    'alignContent': 'center',
+    'justifyContent': 'center',
+    'borderBottom': 'solid rgba(149,149,149,0.21) 0.125em'
+};
 
 export const TopRightWrapper = styled.div`
     display: flex;
