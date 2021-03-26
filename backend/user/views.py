@@ -3,6 +3,8 @@ from django.http import JsonResponse, request
 from django.shortcuts import render
 from rest_framework.generics import ListAPIView, GenericAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
+
+from friendships.models import Friendships
 from user.serializers.default import UserSerializer
 
 User = get_user_model()
@@ -102,3 +104,25 @@ class GetUpdateMyUserProfile(RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class ShowFriendsView(ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def filter_queryset(self, queryset):
+        return self.request.user.friends
+
+    # def get_queryset(self):
+    #     friends_list = []
+    #     received = Friendships.objects.filter(request_for=self.request.user, status='A')
+    #     for friend in received:
+    #         friends_list.append(friend.request_from)
+    #     sent = Friendships.objects.filter(request_from=self.request.user, status='A')
+    #     for friend in sent:
+    #         friends_list.append(friend.request_for)
+    #     return friends_list
+
+
+
+

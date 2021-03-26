@@ -1,13 +1,13 @@
 from django.contrib.auth import get_user_model
+from rest_framework import status
 
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from post.models import Post
+from post.models import Post, PostImages
 from post.permissions import IsOwnerOrAdmin
 from post.serializers.default import PostSerializer
-
 
 User = get_user_model()
 
@@ -27,17 +27,35 @@ class GetCreatePostsView(ListCreateAPIView):
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
 
-    def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+    # def perform_create(self, serializer):
+    #     serializer.save(author=self.request.user)
 
-# below works just fine, no additional url needed. endpoint: backend/api/social/posts/?search=poplpo
+    def create(self, request, *args, **kwargs):
+        if request.data.get('post_shared'):
+            post = self.queryset.get(id=request.data['post_shared'])
+            serializer = self.get_serializer(data={'content': request.data['content']}, partial=True)
+            serializer.is_valid(raise_exception=True)
+            new_post = serializer.save(author=request.user, post_shared=post)
+            for image in request.FILES.getlist('images'):
+                new_image = PostImages(image=image, post=new_post)
+                new_image.save()
+        else:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            new_post = serializer.save(author=request.user)
+            for image in request.FILES.getlist('images'):
+                new_image = PostImages(image=image, post=new_post)
+                new_image.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    # below works just fine, no additional url needed. endpoint: backend/api/social/posts/?search=poplpo
     def get(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         search = request.query_params.get('search')
 
         if search:
             queryset = queryset.filter(content__icontains=search).order_by('created')
-            #serializer = self.get_serializer(queryset, many=True)
+            # serializer = self.get_serializer(queryset, many=True)
             serializer = PostSerializer(queryset, many=True)
         else:
             serializer = PostSerializer(queryset, many=True)

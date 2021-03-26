@@ -169,10 +169,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static-files/'
-STATIC_ROOT = '/static-files/'
+STATIC_ROOT = os.path.join(BASE_DIR, '/static-files/')
 
 MEDIA_URL = '/media-files/'
-MEDIA_ROOT = '/media-files/'
+MEDIA_ROOT = os.path.join(BASE_DIR, '/media-files/')
 
 # Corsheaders
 # https://pypi.org/project/django-cors-headers/

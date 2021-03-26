@@ -2,11 +2,11 @@ from rest_framework import serializers
 
 from comments.models import Comments
 from post.serializers.default import PostSerializer
-from user.serializers.default import UserSerializer
+from user.serializers.nested import UserCommentSerializer
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    written_by = UserSerializer(read_only=True)
+    written_by = UserCommentSerializer(read_only=True)
     comment_for = PostSerializer(read_only=True)
 
     class Meta:
