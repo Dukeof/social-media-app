@@ -20,9 +20,10 @@ class SendFriendRequestView(GenericAPIView):
         if sender == receiver:
             return JsonResponse({'detail': 'You can not send requests to yourself'})
         # Guillaume
-        row_one = Friendships.objects.filter((Q(request_from=sender), Q(request_for=receiver)) |
-                                             (Q(request_for=sender), Q(request_from=receiver)))
+        # row_one = Friendships.objects.filter(Q(request_from=sender), Q(request_for=receiver))
         # row_two = Friendships.objects.filter(Q(request_for=sender), Q(request_from=receiver))
+        row_one = Friendships.objects.filter(Q(request_from=sender), Q(request_for=receiver) | Q(request_for=sender),
+                                             Q(request_from=receiver))
         if row_one:
             return JsonResponse({'detail': 'Oops! Can not do that'})
         friendship = Friendships(request_from=sender, request_for=receiver)

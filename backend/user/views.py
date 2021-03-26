@@ -75,8 +75,18 @@ class ShowFriendsView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    def get_object(self):
-        return self.request.user
+    def filter_queryset(self, queryset):
+        return self.request.user.friends
+
+    # def get_queryset(self):
+    #     friends_list = []
+    #     received = Friendships.objects.filter(request_for=self.request.user, status='A')
+    #     for friend in received:
+    #         friends_list.append(friend.request_from)
+    #     sent = Friendships.objects.filter(request_from=self.request.user, status='A')
+    #     for friend in sent:
+    #         friends_list.append(friend.request_for)
+    #     return friends_list
 
 
 

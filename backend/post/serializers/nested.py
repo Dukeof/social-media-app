@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from post.models import Post
+from post.models import Post, PostImages
 from user.serializers.nested import UserPostSerializer
 
 
@@ -12,3 +12,7 @@ class PostSharedSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PostImages
+        fields = ['image']

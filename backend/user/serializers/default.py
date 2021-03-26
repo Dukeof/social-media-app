@@ -7,7 +7,7 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
-    friends = serializers.ReadOnlyField()
+    friends = UserPostSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
@@ -23,3 +23,4 @@ class UserSerializer(serializers.ModelSerializer):
                   'avatar',
                   'about_me',
                   'friends']
+

@@ -6,7 +6,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from post.models import Post
+from post.models import Post, PostImages
 from post.permissions import IsOwnerOrAdmin
 from post.serializers.default import PostSerializer
 from user.serializers.default import UserSerializer
@@ -27,11 +27,17 @@ class GetCreatePostsView(ListCreateAPIView):
             post = self.queryset.get(id=request.data['post_shared'])
             serializer = self.get_serializer(data={'content': request.data['content']}, partial=True)
             serializer.is_valid(raise_exception=True)
-            serializer.save(author=request.user, post_shared=post)
+            new_post = serializer.save(author=request.user, post_shared=post)
+            for image in request.FILES.getlist('images'):
+                new_image = PostImages(image=image, post=new_post)
+                new_image.save()
         else:
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
-            serializer.save(author=request.user)
+            new_post = serializer.save(author=request.user)
+            for image in request.FILES.getlist('images'):
+                new_image = PostImages(image=image, post=new_post)
+                new_image.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 

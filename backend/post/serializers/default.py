@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from comments.serializers.nested import CommentInPostSerializer
 from post.models import Post
-from post.serializers.nested import PostSharedSerializer
+from post.serializers.nested import PostSharedSerializer, ImageSerializer
 from user.serializers.nested import UserPostSerializer
 
 
@@ -11,7 +11,7 @@ class PostSerializer(serializers.ModelSerializer):
     liked_by = UserPostSerializer(read_only=True, many=True)
     post_shared = PostSharedSerializer(read_only=True)
     comments = CommentInPostSerializer(many=True, read_only=True)
-    # shared_within_posts = PostSharedSerializer(read_only=True)
+    images = ImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Post
