@@ -9,6 +9,11 @@ User = get_user_model()
 
 
 class GetAllUsersView(ListAPIView):
+    '''
+    Get all the users
+
+    .
+    '''
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -27,6 +32,11 @@ class GetAllUsersView(ListAPIView):
 
 
 class ToggleLikeUserView(GenericAPIView):
+    '''
+    Toggle follow/unfollow a user
+
+    .
+    '''
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -44,6 +54,11 @@ class ToggleLikeUserView(GenericAPIView):
 
 
 class GetFollowersView(ListAPIView):
+    '''
+    List of all the logged in user’s followers
+
+    .
+    '''
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
@@ -56,6 +71,11 @@ class GetFollowersView(ListAPIView):
 
 
 class IAmFollowingView(ListAPIView):
+    '''
+     List of all the people the current logged in user is following
+
+     .
+    '''
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
@@ -64,6 +84,19 @@ class IAmFollowingView(ListAPIView):
 
 
 class GetUpdateMyUserProfile(RetrieveUpdateAPIView):
+    '''
+    get: Get logged in user’s profile (as well as private information like email, etc.)
+
+    .
+
+    patch: Update the logged in user’s profile public info
+
+    .
+
+    put: Update the logged in user’s profile public info
+
+    .
+    '''
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
