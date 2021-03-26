@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Redirect } from 'react-router-dom';
 // ==================== store ====================
 import { store } from './store';
-import { logInOrOutReducer } from './store/reducers/logInOrOutReducer';
+import { logInAction } from './store/actions';
 // ==================== pages ====================
 import LogInPage from './pages/logInPage';
 import SignUpPage from './pages/signUpPage';
@@ -16,7 +16,7 @@ import SignUpPageRegister from './pages/signUpPageRegister';
 
 const token = localStorage.getItem('token');
 if (token) {
-    store.dispatch(logInOrOutReducer(token))
+    logInAction(token)
 
 }
 

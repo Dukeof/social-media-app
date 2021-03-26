@@ -15,27 +15,21 @@ const SignUpPageCongrats = () => {
     if (!token) {
         return (
             <Grommet>
-                <Box
-                    flex
-                    width='97.5wv'
-                    direction='row'
-                >
+                <Box flex width='97.5wv' direction='row'>
+
                     <Box width='40%'>
                         <MotionPanel />
                     </Box>
-                    <Box
-                        flex
-                        width='60%'
-                        direction='column'
-                    >
+
+                    <Box flex width='60%' direction='column'>
                         <SignUpPanelCongrats />
                     </Box>
+
                 </Box>
-                    
             </Grommet>
         );
     } else {
-        return <Redirect to='/newsfeed/'/>
+        return <Redirect to='/feed/'/>
     };
 };
 
