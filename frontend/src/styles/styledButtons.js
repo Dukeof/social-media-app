@@ -30,6 +30,12 @@ export const signInButtonStyle = {
     fontWeight: 'bold',
 };
 
+export const SIGNUPButtonStyle = {
+    size: 'large', 
+    fontSize: '12px', 
+    'fontWeight': 'bold',
+}
+
 export const ContinueButtonStyle = {
     border: 'none',
     borderRadius: '1.75em',
@@ -42,7 +48,16 @@ export const ContinueButtonStyle = {
 };
 
 
-
+export const SIGNINButtonStyle = {
+    border: 'none',
+    'borderRadius': '1.75em',
+    background: 'linear-gradient(110deg, rgba(196,104,255,0.76), rgba(110,145,246,0.78))',
+    fontWeight: 'bold',
+    color: 'white',
+    width: '16em',
+    height: '3.75em',
+    fontSize: '0.75',
+};
 
 
 

@@ -27,7 +27,7 @@ SECRET_KEY = 'zy_)^sfh0xaz%o*$+%e5vc1$x5=az)0)i#lhk4@l6*cbag7nyh'
 DEBUG = ast.literal_eval(os.environ.get('DJANGO_DEBUG'))
 
 
-ALLOWED_HOSTS = ['0.0.0.0', 'juskoded.propulsion-learn.ch', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -38,10 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     # 3rd party
     'drf_yasg',
     'rest_framework',
     'corsheaders',
+
     # own
     'registration',
     'user',

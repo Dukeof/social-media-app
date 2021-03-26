@@ -5,7 +5,7 @@ import { LOGIN, LOGOUT } from "../constants";
 const initialState = {
     token: null,
     user: null,
-    error: null,
+    
     authenticated: null
 };
 
@@ -15,7 +15,7 @@ export const logInOrOutReducer = (state = initialState, action) => {
         return {
             ...state,
             token: action.payload.token,
-            user: action.payload.user,
+            // user: action.payload.user,
             authenticated: true
         }
     } else if (action.type === LOGOUT) {
