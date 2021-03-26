@@ -38,7 +38,7 @@ const LogInPage = () => {
         )
     } else {
 
-        return <Redirect to='/newsfeed/'/>
+        return <Redirect to='/feed/'/>
     };
 };
 

@@ -29,7 +29,7 @@ const SignUpPanel = () => {
             body: JSON.stringify({ email: value.email })
         }
         fetch(`${baseUrl}auth/registration/`, config)
-        .then((response) => {
+        .then(response => {
             // console.log(response.status)
           if (response.status === 201) history.push('/signup/congrats');
         });
@@ -37,45 +37,26 @@ const SignUpPanel = () => {
 
     return (
         <Grommet>
-            <Box flex direction='row' height='15%'  align='start'
-                justify='end' pad='1em'
-            >
-                <Text font='Roboto, sans-serif'
-                    size='0.8em' fontWeight='500' margin='0.5em'
-                >Already have an account?</Text>
+            <Box flex direction='row' height='15%'  align='start' justify='end' pad='1em'>
+                <Text font='Roboto, sans-serif' size='0.8em' fontWeight='500' margin='0.5em'>Already have an account?</Text>
                 <Button style={signInButtonStyle} label="SIGN IN" href="/" />
             </Box>
             <Box height='85%'>
-                <Form value={ signUpValues } 
-                    onChange={ nextValue => setSignUpValues(nextValue) }
-                    onSubmit={ (value ) => signUpHandler(value) }
-                >
-                    <Box flex justify='end' direction='column'
-                        align='center' height='75%' gap='6.5em'
-                    >
-                        <Text font='Roboto, sans-serif'
-                            size='2.5em' fontWeight='300' margin={{top: '2.5em'}}                            
-                        >Sign Up</Text>
+                <Form value={ signUpValues } onChange={ nextValue => setSignUpValues(nextValue) } onSubmit={ (value ) => signUpHandler(value) }>
+                    <Box flex justify='end' direction='column' align='center' height='75%' gap='6.5em'>
+                        <Text font='Roboto, sans-serif' size='2.5em' fontWeight='300' margin={{top: '2.5em'}}>Sign Up</Text>
                         <Box style={signUpInputWrapper}>
                             <Box width="medium" direction="row" margin="large" align="center" marginBottom='0.25em'>
                                 
                                 <FormField name="email" htmlFor="email">
-                                <TextInput id='email' name='email' placeholder='Email'
-                                    icon={<Mail color='purple' style={{marginBottom: '-0.05em'}}/>}
-                                    revese plain type='text' margin='0.25em'
-                                /></FormField>
-                           
+                                    <TextInput id='email' name='email' placeholder='Email'revese plain type='text' margin='0.25em'
+                                        icon={<Mail color='purple' style={{marginBottom: '-0.05em'}}/>}
+                                    />
+                                </FormField>                           
                             </Box>
                         </Box>
-
                     </Box>
-                    <Box 
-                        flex
-                        justify='center'
-                        align='center'
-                        height='25%'
-                        margin='2.5em'
-                    >
+                    <Box flex justify='center' align='center' height='25%' margin='2.5em'>
                         <Button style={signInColorfulButtonStyle} label="CONTINUE" type="submit" />
                     </Box>
                 </Form>
