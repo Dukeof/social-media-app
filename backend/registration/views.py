@@ -2,8 +2,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.generics import CreateAPIView, GenericAPIView
 from rest_framework.response import Response
 from registration.models import Registration
-from registration.serializers import RegisterUserSerializer
-from user.serializers.nested import UserValidationSerializer
+from registration.serializers import RegisterUserSerializer, UserValidationSerializer
 
 
 class CreateRegistrationView(CreateAPIView):

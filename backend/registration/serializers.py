@@ -31,3 +31,9 @@ class RegisterUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Registration
         fields = "__all__"
+
+class UserValidationSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = Registration
+            fields = "__all__"
